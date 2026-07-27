@@ -1,0 +1,195 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sign in — Mailbox</title>
+<style>
+  :root{
+    --ink:#12100d;
+    --cream:#f4f0e6;
+    --cream-dim:#cfc8b8;
+    --gold:#b6893f;
+    --gold-bright:#d9ac5e;
+    --line:rgba(244,240,230,0.14);
+    --error:#c65b4f;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    background:var(--ink);color:var(--cream);
+    font-family:'Iowan Old Style','Georgia',serif;
+    min-height:100vh;display:flex;align-items:center;justify-content:center;
+    padding:24px;
+  }
+  .card{
+    width:100%;max-width:420px;
+    border:1px solid var(--line);
+    padding:52px 42px;
+    position:relative;
+  }
+  .brand{
+    font-size:15px;letter-spacing:0.15em;text-transform:uppercase;
+    color:var(--gold-bright);margin-bottom:8px;text-align:center;
+  }
+  h1{
+    font-size:30px;font-weight:400;text-align:center;margin-bottom:8px;
+  }
+  .sub{
+    font-family:'Helvetica Neue',Arial,sans-serif;
+    font-size:13.5px;color:var(--cream-dim);text-align:center;margin-bottom:36px;
+    font-weight:300;
+  }
+  .google-btn{
+    width:100%;display:flex;align-items:center;justify-content:center;gap:12px;
+    background:var(--cream);color:var(--ink);border:none;
+    padding:15px;border-radius:2px;cursor:pointer;
+    font-family:'Helvetica Neue',Arial,sans-serif;
+    font-size:14.5px;font-weight:600;letter-spacing:0.02em;
+    transition:transform .2s ease, background .2s ease;
+  }
+  .google-btn:hover{background:#fff;transform:translateY(-1px);}
+  .google-btn:disabled{opacity:0.6;cursor:default;transform:none;}
+  .google-btn svg{width:19px;height:19px;}
+
+  .divider{
+    display:flex;align-items:center;gap:14px;margin:30px 0;
+    color:var(--cream-dim);font-family:'Helvetica Neue',Arial,sans-serif;font-size:12px;
+    text-transform:uppercase;letter-spacing:0.1em;
+  }
+  .divider::before,.divider::after{content:"";flex:1;height:1px;background:var(--line);}
+
+  .email-form input{
+    width:100%;background:transparent;border:1px solid var(--line);
+    color:var(--cream);padding:14px 16px;margin-bottom:14px;border-radius:2px;
+    font-family:'Helvetica Neue',Arial,sans-serif;font-size:14px;
+  }
+  .email-form input:focus{outline:none;border-color:var(--gold);}
+  .email-form button{
+    width:100%;background:var(--gold-bright);color:var(--ink);border:none;
+    padding:14px;border-radius:2px;cursor:pointer;font-weight:600;
+    font-family:'Helvetica Neue',Arial,sans-serif;font-size:14px;letter-spacing:0.04em;
+    text-transform:uppercase;transition:background .2s ease;
+  }
+  .email-form button:hover{background:var(--cream);}
+
+  .status{
+    margin-top:20px;text-align:center;font-family:'Helvetica Neue',Arial,sans-serif;
+    font-size:13px;color:var(--cream-dim);min-height:18px;
+  }
+  .status.error{color:var(--error);}
+
+  .back{
+    display:block;text-align:center;margin-top:28px;
+    font-family:'Helvetica Neue',Arial,sans-serif;font-size:12.5px;
+    color:var(--cream-dim);text-decoration:none;
+  }
+  .back:hover{color:var(--gold-bright);}
+</style>
+</head>
+<body>
+
+<div class="card">
+  <div class="brand">Mailbox</div>
+  <h1>Sign in</h1>
+  <p class="sub">Connect your Google account to view your inbox.</p>
+
+  <button class="google-btn" id="googleSignIn">
+    <svg viewBox="0 0 48 48"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.9 32.9 29.4 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.1 8 3l5.7-5.7C34.9 6.1 29.7 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.3-.4-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.6 15.9 18.9 13 24 13c3.1 0 5.8 1.1 8 3l5.7-5.7C34.9 6.1 29.7 4 24 4c-7.6 0-14.1 4.3-17.7 10.7z"/><path fill="#4CAF50" d="M24 44c5.3 0 10.2-1.8 14-5l-6.5-5.5C29.4 35 26.9 36 24 36c-5.4 0-9.9-3.1-11.4-7.6l-6.6 5C9.8 39.6 16.3 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-1.1 3-3.4 5.4-6.3 6.9l6.5 5.5C39.8 37.3 44 31.4 44 24c0-1.3-.1-2.3-.4-3.5z"/></svg>
+    Continue with Google
+  </button>
+
+  <div class="divider">or</div>
+
+  <form class="email-form" id="emailForm">
+    <input type="email" id="email" placeholder="Email" required>
+    <input type="password" id="password" placeholder="Password" required>
+    <button type="submit">Sign in</button>
+  </form>
+
+  <div class="status" id="status"></div>
+  <a class="back" href="index.html">&larr; Back to home</a>
+</div>
+
+<!-- Firebase SDKs -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyBzzCJlduvbh6YiH2sF2XIDOeA6kQQjmLA",
+    authDomain: "e-mail-67.firebaseapp.com",
+    projectId: "e-mail-67",
+    storageBucket: "e-mail-67.firebasestorage.app",
+    messagingSenderId: "839869222441",
+    appId: "1:839869222441:web:e06c63b165f98e3e3d5638",
+    measurementId: "G-1ST5JWFZ86"
+  };
+  firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+
+  const statusEl = document.getElementById('status');
+  const googleBtn = document.getElementById('googleSignIn');
+  const emailForm = document.getElementById('emailForm');
+
+  function setStatus(msg, isError){
+    statusEl.textContent = msg;
+    statusEl.className = 'status' + (isError ? ' error' : '');
+  }
+
+  // If already logged in, skip straight to app
+  auth.onAuthStateChanged(user => {
+    if (user) {
+      // Only auto-redirect if we already have a Gmail access token stored
+      // (prevents redirect loop before Gmail scope is granted)
+      if (sessionStorage.getItem('gmail_access_token')) {
+        window.location.href = 'app.html';
+      }
+    }
+  });
+
+  // Google sign-in ALSO requests Gmail readonly scope so app.html can fetch mail
+  googleBtn.addEventListener('click', async () => {
+    googleBtn.disabled = true;
+    setStatus('Opening Google sign-in…', false);
+    const provider = new firebase.auth.GoogleAuthProvider();
+    provider.addScope('https://www.googleapis.com/auth/gmail.readonly');
+    provider.setCustomParameters({ prompt: 'consent' });
+
+    try {
+      const result = await auth.signInWithPopup(provider);
+      const credential = firebase.auth.GoogleAuthProvider.credentialFromResult(result);
+      const accessToken = credential.accessToken; // used for Gmail API calls
+
+      sessionStorage.setItem('gmail_access_token', accessToken);
+      sessionStorage.setItem('user_email', result.user.email || '');
+      sessionStorage.setItem('user_name', result.user.displayName || '');
+      sessionStorage.setItem('user_photo', result.user.photoURL || '');
+
+      setStatus('Signed in. Redirecting…', false);
+      window.location.href = 'app.html';
+    } catch (err) {
+      console.error(err);
+      setStatus(err.message || 'Sign-in failed. Try again.', true);
+      googleBtn.disabled = false;
+    }
+  });
+
+  // Optional email/password login (Firebase Auth) — does NOT grant Gmail access,
+  // kept here in case Legend wants a non-Google account path too.
+  emailForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    setStatus('Signing in…', false);
+    try {
+      await auth.signInWithEmailAndPassword(email, password);
+      setStatus('Signed in. Redirecting…', false);
+      window.location.href = 'app.html';
+    } catch (err) {
+      setStatus(err.message || 'Sign-in failed.', true);
+    }
+  });
+</script>
+
+</body>
+</html>

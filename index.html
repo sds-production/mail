@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mailbox — All your inboxes, one place</title>
+<style>
+  :root{
+    --ink:#12100d;
+    --ink-2:#1c1916;
+    --cream:#f4f0e6;
+    --cream-dim:#cfc8b8;
+    --gold:#b6893f;
+    --gold-bright:#d9ac5e;
+    --line:rgba(244,240,230,0.12);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    background:var(--ink);
+    color:var(--cream);
+    font-family:'Iowan Old Style','Georgia',serif;
+    min-height:100vh;
+    overflow-x:hidden;
+  }
+  .noise{
+    position:fixed;inset:0;pointer-events:none;opacity:0.04;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  nav{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:32px 6vw;
+    border-bottom:1px solid var(--line);
+  }
+  .brand{
+    font-size:20px;letter-spacing:0.12em;text-transform:uppercase;
+    color:var(--gold-bright);font-weight:600;
+  }
+  .brand span{color:var(--cream-dim);font-weight:400;}
+  .nav-cta{
+    font-family:'Helvetica Neue',Arial,sans-serif;
+    font-size:13px;letter-spacing:0.08em;text-transform:uppercase;
+    color:var(--cream);text-decoration:none;
+    border:1px solid var(--gold);padding:10px 22px;border-radius:2px;
+    transition:all .25s ease;
+  }
+  .nav-cta:hover{background:var(--gold);color:var(--ink);}
+
+  .hero{
+    display:flex;flex-direction:column;align-items:flex-start;
+    padding:14vh 6vw 12vh;position:relative;
+  }
+  .eyebrow{
+    font-family:'Helvetica Neue',Arial,sans-serif;
+    font-size:12px;letter-spacing:0.3em;text-transform:uppercase;
+    color:var(--gold);margin-bottom:28px;
+  }
+  h1{
+    font-size:clamp(44px,7vw,88px);
+    line-height:1.03;
+    font-weight:400;
+    max-width:14ch;
+    color:var(--cream);
+  }
+  h1 em{
+    font-style:italic;color:var(--gold-bright);
+  }
+  .sub{
+    font-family:'Helvetica Neue',Arial,sans-serif;
+    font-size:17px;line-height:1.7;color:var(--cream-dim);
+    max-width:52ch;margin-top:28px;font-weight:300;
+  }
+  .cta-row{margin-top:48px;display:flex;gap:18px;align-items:center;}
+  .cta-primary{
+    font-family:'Helvetica Neue',Arial,sans-serif;
+    background:var(--gold-bright);color:var(--ink);
+    padding:16px 34px;border-radius:2px;text-decoration:none;
+    font-size:14px;letter-spacing:0.06em;text-transform:uppercase;font-weight:600;
+    transition:transform .2s ease, background .2s ease;
+  }
+  .cta-primary:hover{background:var(--cream);transform:translateY(-2px);}
+  .cta-note{
+    font-family:'Helvetica Neue',Arial,sans-serif;
+    font-size:13px;color:var(--cream-dim);
+  }
+
+  .rule{width:100%;height:1px;background:var(--line);margin:0;}
+
+  .features{
+    display:grid;grid-template-columns:repeat(3,1fr);
+    gap:0;border-top:1px solid var(--line);
+  }
+  .feature{
+    padding:60px 6vw;border-right:1px solid var(--line);
+  }
+  .feature:last-child{border-right:none;}
+  .feature .mark{
+    font-family:'Helvetica Neue',Arial,sans-serif;
+    color:var(--gold);font-size:12px;letter-spacing:0.2em;margin-bottom:18px;display:block;
+  }
+  .feature h3{font-size:24px;font-weight:400;margin-bottom:14px;color:var(--cream);}
+  .feature p{
+    font-family:'Helvetica Neue',Arial,sans-serif;
+    font-size:14.5px;line-height:1.7;color:var(--cream-dim);font-weight:300;
+  }
+
+  footer{
+    padding:40px 6vw;border-top:1px solid var(--line);
+    display:flex;justify-content:space-between;
+    font-family:'Helvetica Neue',Arial,sans-serif;
+    font-size:12px;color:var(--cream-dim);letter-spacing:0.05em;
+  }
+
+  @media(max-width:800px){
+    .features{grid-template-columns:1fr;}
+    .feature{border-right:none;border-bottom:1px solid var(--line);}
+  }
+</style>
+</head>
+<body>
+<div class="noise"></div>
+
+<nav>
+  <div class="brand">Mailbox<span> / one inbox</span></div>
+  <a class="nav-cta" href="login.html">Sign in</a>
+</nav>
+
+<section class="hero">
+  <div class="eyebrow">Every account. One view.</div>
+  <h1>All your <em>email</em>,<br>finally in one place.</h1>
+  <p class="sub">
+    Connect your Google account and read, search, and manage every message
+    without switching tabs. No clutter, no noise — just your inbox, done right.
+  </p>
+  <div class="cta-row">
+    <a class="cta-primary" href="login.html">Get started</a>
+    <span class="cta-note">Free · Sign in with Google</span>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<section class="features">
+  <div class="feature">
+    <span class="mark">01</span>
+    <h3>Connect Google</h3>
+    <p>Securely link your Gmail account with one click. We never store your password — authentication happens entirely through Google.</p>
+  </div>
+  <div class="feature">
+    <span class="mark">02</span>
+    <h3>See everything</h3>
+    <p>Your inbox loads instantly, cleanly formatted, sorted by what matters. No ads, no distractions.</p>
+  </div>
+  <div class="feature">
+    <span class="mark">03</span>
+    <h3>Stay in control</h3>
+    <p>Sign out any time and disconnect your account instantly. Your data stays yours.</p>
+  </div>
+</section>
+
+<footer>
+  <span>Mailbox</span>
+  <span>&copy; 2026</span>
+</footer>
+
+</body>
+</html>
