@@ -178,6 +178,41 @@
     }
   });
 
+  // Shared handler for the result of either signInWithPopup or getRedirectResult
+  function handleGoogleResult(result){
+    if (!result || !result.user) return false; // no sign-in happened (e.g. no redirect pending)
+
+    const credential = firebase.auth.GoogleAuthProvider.credentialFromResult(result);
+
+    if (!credential || !credential.accessToken) {
+      // Signed into Firebase, but no Gmail OAuth token came back.
+      // Usually means the popup got interrupted/blocked and consent wasn't completed.
+      setStatus('Signed in, but Gmail access was not granted. Please try again and allow the popup.', true);
+      googleBtn.disabled = false;
+      return false;
+    }
+
+    sessionStorage.setItem('gmail_access_token', credential.accessToken);
+    sessionStorage.setItem('user_email', result.user.email || '');
+    sessionStorage.setItem('user_name', result.user.displayName || '');
+    sessionStorage.setItem('user_photo', result.user.photoURL || '');
+
+    setStatus('Signed in. Redirecting…', false);
+    window.location.href = 'app.html';
+    return true;
+  }
+
+  // Catch the case where the popup was blocked and Firebase silently fell back
+  // to a full-page redirect — this runs once on page load to pick up that result.
+  auth.getRedirectResult().then(result => {
+    if (result && result.user) handleGoogleResult(result);
+  }).catch(err => {
+    console.error(err);
+    if (err && err.code !== 'auth/no-auth-event' && err.code !== 'auth/null-user') {
+      setStatus(err.message || 'Sign-in failed. Try again.', true);
+    }
+  });
+
   // Google sign-in ALSO requests Gmail readonly scope so app.html can fetch mail
   googleBtn.addEventListener('click', async () => {
     googleBtn.disabled = true;
@@ -188,18 +223,22 @@
 
     try {
       const result = await auth.signInWithPopup(provider);
-      const credential = firebase.auth.GoogleAuthProvider.credentialFromResult(result);
-      const accessToken = credential.accessToken; // used for Gmail API calls
-
-      sessionStorage.setItem('gmail_access_token', accessToken);
-      sessionStorage.setItem('user_email', result.user.email || '');
-      sessionStorage.setItem('user_name', result.user.displayName || '');
-      sessionStorage.setItem('user_photo', result.user.photoURL || '');
-
-      setStatus('Signed in. Redirecting…', false);
-      window.location.href = 'app.html';
+      const handled = handleGoogleResult(result);
+      if (!handled) googleBtn.disabled = false;
     } catch (err) {
       console.error(err);
+      if (err && (err.code === 'auth/popup-blocked' || err.code === 'auth/cancelled-popup-request')) {
+        // Fall back to a full-page redirect when the popup can't open
+        setStatus('Popup blocked — redirecting instead…', false);
+        try {
+          await auth.signInWithRedirect(provider);
+        } catch (redirectErr) {
+          console.error(redirectErr);
+          setStatus(redirectErr.message || 'Sign-in failed. Try again.', true);
+          googleBtn.disabled = false;
+        }
+        return;
+      }
       setStatus(err.message || 'Sign-in failed. Try again.', true);
       googleBtn.disabled = false;
     }
